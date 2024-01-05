@@ -18,6 +18,14 @@ origin	git@git.generalassemb.ly:hc-conklin/testing-repo.git (push)
 - ideally, make the new repo without any README or .gitignore file to reduce any issues about merging
 - I created mine with just the MIT license, which is a file that didn't exist in my GA-Enterprise repo
 
+#### Default branch name
+- for simplicity, make the primary/default branch of your new repo have the same name as the primary branch of your GA repo ("main" or "trunk" or whatever)
+![primary branch on GA repo](/images/ga-primary-branch.png)
+- when you create your new personal repo, git will name your default branch "main"
+- you can change that by editing new (personal) repo's settings on github
+![update default branch on github](/images/set-default-branch.png)
+- I stuck with the default branch name of "main" for this testing-repo but if you're working with a repo that uses "trunk" as its default, just substitute "trunk" for "main" in all the git commands below
+
 ### Add your personal git repo as a second remote locally
 - on your computer, use the `git remote add` command to connect your local version of the repo to your personal git account
 - that command takes two arguments: 
@@ -40,3 +48,21 @@ personal	git@github.com:heath3conk/testing-repo.git (push)
 
 ### Push your local repo to your personal repo
 - as with your `pull` you'll need to specify which remote & branch you want to push changes to: `git push personal main`
+
+### Push your local repo to the GA-Enterprise repo
+- run `git push origin main` --> including the `origin` label and the `main` branch name to identify exactly where this push is going
+- I got this error when I tried that:
+```bash
+error: failed to push some refs to 'git.generalassemb.ly:hc-conklin/testing-repo.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+```
+- so I ran `git pull -r origin main` --> again with the `origin` label and the `main` branch name, and the `-r` flag for rebase
+- running `git push origin main` worked after that pull
+
+### Keeping both remotes in sync with each other
+- ...is not necessary
+- during the course, you'll probably be making a lot of updates to your projects or labs and pushing them to the GA enterprise repo for grading and feedback
+- you do not need to push those changes to your personal remote repo every time, although you could
+- if you have a lot of changes/commits to push to your personal remote, you can always start at the "Sync your local repo to your personal repo" step and continue from there
